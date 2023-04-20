@@ -1,0 +1,15 @@
+{
+  "domain": "iothings",
+  "name": "Io-Things sensor home integration",
+  "codeowners": [
+    "@stefaanternier"
+  ],
+  "dependencies": [],
+  "documentation": "https://github.com/stefaanternier/home-assistant-io-things",
+  "iot_class": "local_polling",
+  "requirements": [
+    "google-cloud-firestore",
+    "google-auth"
+  ],
+  "version": "0.1.0"
+}
