@@ -1,0 +1,7 @@
+{
+  "name": "io-things",
+  "domains": ["binary_sensor", "sensor"],
+  "homeassistant": "0.96.0",
+  "render_readme": true,
+  "iot_class": "cloud"
+}
