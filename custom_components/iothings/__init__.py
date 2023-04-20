@@ -28,5 +28,5 @@ async def authenicate(hass, config):
 
 async def async_setup(hass, config):
 
-    await asyncio.create_task(authenicate(hass, config))
+    task = asyncio.create_task(authenicate(hass, config))
     return True
