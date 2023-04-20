@@ -1,8 +1,12 @@
 import asyncio
 import requests
+import logging
+
 import google.cloud
 from google.cloud import firestore
 from .const import DOMAIN, ACCESS_TOKEN, EMAIL, PASSWORD
+
+_LOGGER = logging.getLogger(__name__)
 
 async def authenicate(hass, config):
     try:
@@ -27,6 +31,9 @@ async def authenicate(hass, config):
         print(f"Caught exception: {e}")
 
 async def async_setup(hass, config):
+    _LOGGER.info(
+        "=> Io-things setup has started",
 
+    )
     task = asyncio.create_task(authenicate(hass, config))
     return True
