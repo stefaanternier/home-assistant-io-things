@@ -42,8 +42,15 @@ SENSORS = (
 
 callback_done = threading.Event()
 
-async def connect(sensors, device_id, db):
+async def connect(sensors, device_id, hass):
     try:
+        db = None
+        while db is None:
+            try:
+                db = hass.data['iothingsdb']
+            except KeyError:
+                print("Waiting for iotdb...")
+                await asyncio.sleep(1)
         print(f'about to listen to db {device_id}')
         doc_ref = db.document(f'devices/{device_id}')
         doc_watch = doc_ref.on_snapshot(
@@ -69,10 +76,10 @@ async def async_setup_platform(hass, config, add_entities, discovery_info=None):
         IothingsSensor(unique_id, name, sensor_desc)
         for sensor_desc in SENSORS
     ]
-    db = hass.data['iothingsdb']
-    print(f"db found: {db}")
+    # db = hass.data['iothingsdb']
+    # print(f"db found: {db}")
     add_entities(sensors)
-    task = asyncio.create_task(connect(sensors, unique_id, db))
+    task = asyncio.create_task(connect(sensors, unique_id, hass))
 
 class IothingsSensor(SensorEntity):
     def __init__(self, unique_id, name, sensor_desc):
