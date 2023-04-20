@@ -62,6 +62,7 @@ def on_snapshot(doc_snapshot, changes, read_time, sensors):
     callback_done.set()
 
 async def async_setup_platform(hass, config, add_entities, discovery_info=None):
+    print("in setup sensors")
     unique_id = config.get(CONF_UNIQUE_ID)
     name = config.get(CONF_NAME)
     sensors = [
@@ -69,6 +70,7 @@ async def async_setup_platform(hass, config, add_entities, discovery_info=None):
         for sensor_desc in SENSORS
     ]
     db = hass.data['iothingsdb']
+    print(f"db found: {db}")
     add_entities(sensors)
     task = asyncio.create_task(connect(sensors, unique_id, db))
 
