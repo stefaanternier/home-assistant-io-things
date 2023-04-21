@@ -95,7 +95,7 @@ async def connect_http(sensors, device_id, hass):
 
                     seconds_until_future = epoch_time - time.time() + 10
 
-                    _LOGGER.warning(
+                    _LOGGER.info(
                         "Device %s Sleeping for %s seconds", device_id, seconds_until_future
                     )
                     for sensor in sensors:
@@ -108,7 +108,7 @@ async def connect_http(sensors, device_id, hass):
 
 async def async_setup_platform(hass, config, add_entities, discovery_info=None):
     unique_id = config.get(CONF_UNIQUE_ID)
-    _LOGGER.warning("In setup sensor %s", unique_id)
+    _LOGGER.info("In setup sensor %s", unique_id)
     name = config.get(CONF_NAME)
     sensors = [
         IothingsSensor(unique_id, name, sensor_desc)
@@ -163,10 +163,13 @@ class IothingsSensor(SensorEntity):
 
     def update_data(self, data):
         name = data['name']
+        _LOGGER.info("name is %s", name)
         self._name = data['name'] + ' (' + self._sensor_desc.key + ')'
         last_message = data['lastMessage']
         payload = last_message['parsedPayload']
-        self._state = payload[self._sensor_desc.key]
+        num = payload[self._sensor_desc.key]
+        rounded_num = round(num, 2)
+        self._state = rounded_num
+        _LOGGER.info("before schedule, state is %s", rounded_num)
         self.schedule_update_ha_state()
-
-
+        
