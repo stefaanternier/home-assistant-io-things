@@ -172,4 +172,3 @@ class IothingsSensor(SensorEntity):
         self._state = rounded_num
         _LOGGER.info("before schedule, state is %s", rounded_num)
         self.schedule_update_ha_state()
-        
