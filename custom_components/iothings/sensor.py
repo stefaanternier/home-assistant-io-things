@@ -81,7 +81,7 @@ async def connect_http(sensors, device_id, hass):
                 except KeyError:
                     await asyncio.sleep(10)
 
-            url = f'http://portal.io-things.eu/api/device/{device_id}/state?key={access_token}'
+            url = f'http://portal.io-things.eu/api/key/device/{device_id}/state?key={access_token}'
             try:
                 async with session.get(url) as response:
                     data = await response.json()
