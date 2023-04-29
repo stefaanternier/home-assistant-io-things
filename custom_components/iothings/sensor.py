@@ -122,7 +122,7 @@ async def async_setup_platform(hass, config, add_entities, discovery_info=None):
 class IothingsSensor(SensorEntity):
     def __init__(self, unique_id, name, sensor_desc):
         self._native_value = 0.1
-        self._state = 0
+        #self._state = 0
         self._deviceId = unique_id
         self._name = f"{name} {sensor_desc.name}"
         self._unique_id = f"{unique_id}_{sensor_desc.key}"
